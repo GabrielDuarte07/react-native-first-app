@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -6,14 +6,57 @@ import {
   SafeAreaView,
   TextInput,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 
+type Task = {
+  id: string;
+  title: string;
+};
+
 const Home = (): React.JSX.Element => {
+  const [newTask, setNewTask] = useState('');
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  function handleAddTask() {
+    const data = {
+      id: String(new Date().getTime()),
+      title: newTask ? newTask : 'empty task',
+    };
+
+    setTasks([...tasks, data]);
+    setNewTask('');
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.title}>Hello World!</Text>
-        <TextInput style={styles.textInput} />
+
+        <TextInput
+          placeholder="Digite a tarefa"
+          placeholderTextColor="#555"
+          style={styles.textInput}
+          value={newTask}
+          onChangeText={text => setNewTask(text)}
+        />
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={styles.button}
+          onPress={handleAddTask}>
+          <Text style={styles.buttonText}>Adicionar</Text>
+        </TouchableOpacity>
+        <Text style={styles.titleTasks}>Minhas tarefas</Text>
+
+        {tasks.map(task => (
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.buttonTask}
+            key={task.id}>
+            <Text style={styles.titleTask}>{task.title}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </SafeAreaView>
   );
@@ -25,9 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#121214',
   },
   container: {
-    display: 'flex',
-    height: '100%',
-    width: '100%',
+    flex: 1,
     backgroundColor: '#121214',
     paddingHorizontal: 30,
     paddingVertical: 50,
@@ -35,6 +76,13 @@ const styles = StyleSheet.create({
   title: {
     color: '#f1f1f1',
     fontSize: 24,
+    fontWeight: 'bold',
+  },
+  titleTasks: {
+    color: '#f1f1f1',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginVertical: 50,
   },
   textInput: {
     fontSize: 18,
@@ -43,6 +91,30 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 7,
     padding: Platform.OS === 'ios' ? 15 : 12,
+  },
+  button: {
+    backgroundColor: '#eba417',
+    padding: 15,
+    borderRadius: 7,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#121214',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  buttonTask: {
+    backgroundColor: '#29292e',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  titleTask: {
+    color: '#f1f1f1',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
