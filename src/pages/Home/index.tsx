@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import TaskList from '../../components/TaskList';
-import {TasksContext} from '../../contexts/TasksContext';
+import {useTaskList} from '../../contexts/TasksContext';
 
 const Home = (): React.JSX.Element => {
   const [newTask, setNewTask] = useState('');
-  const {addTask} = useContext(TasksContext);
+  const {addTask} = useTaskList();
 
   function handleAddTask() {
     const data = {

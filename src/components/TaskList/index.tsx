@@ -1,9 +1,30 @@
 import React, {useContext} from 'react';
-import {StyleSheet, FlatList, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {ITask, TasksContext} from '../../contexts/TasksContext';
 
 const TaskList = (): React.JSX.Element => {
-  const {tasks} = useContext(TasksContext);
+  const {tasks, removeTask} = useContext(TasksContext);
+
+  const handleDeleteTask = (id: string): void => {
+    const tasksTemp = [...tasks];
+    const titleTask = tasksTemp.find(task => task.id === id)?.title || '';
+    Alert.alert('Tem certeza?', `Deseja mesmo excluir ${titleTask} ?`, [
+      {
+        text: 'Cancelar',
+        onPress: () => {},
+      },
+      {
+        text: 'Excluir',
+        onPress: () => removeTask(id),
+      },
+    ]);
+  };
 
   return (
     <FlatList
@@ -13,6 +34,7 @@ const TaskList = (): React.JSX.Element => {
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.buttonTask}
+          onPress={() => handleDeleteTask(item.id)}
           key={item.id}>
           <Text style={styles.titleTask}>{item.title}</Text>
         </TouchableOpacity>
