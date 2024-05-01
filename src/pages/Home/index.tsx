@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -9,15 +9,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import TaskList from '../../components/TaskList';
-
-type Task = {
-  id: string;
-  title: string;
-};
+import {TasksContext} from '../../contexts/TasksContext';
 
 const Home = (): React.JSX.Element => {
   const [newTask, setNewTask] = useState('');
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const {addTask} = useContext(TasksContext);
 
   function handleAddTask() {
     const data = {
@@ -25,7 +21,7 @@ const Home = (): React.JSX.Element => {
       title: newTask ? newTask : 'empty task',
     };
 
-    setTasks([...tasks, data]);
+    addTask(data);
     setNewTask('');
   }
 
@@ -50,7 +46,7 @@ const Home = (): React.JSX.Element => {
         </TouchableOpacity>
         <Text style={styles.titleTasks}>Minhas tarefas</Text>
 
-        <TaskList tasks={tasks} />
+        <TaskList />
       </View>
     </SafeAreaView>
   );
