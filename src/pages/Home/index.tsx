@@ -35,10 +35,12 @@ const Home = (): React.JSX.Element => {
           placeholderTextColor="#555"
           style={styles.textInput}
           value={newTask}
+          testID="txtTask"
           onChangeText={text => setNewTask(text)}
         />
 
         <TouchableOpacity
+          testID="addButton"
           activeOpacity={0.7}
           style={styles.button}
           onPress={handleAddTask}>

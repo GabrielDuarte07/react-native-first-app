@@ -10,6 +10,6 @@ describe('comparing toEqual with toBe', () => {
   it('toBe', () => {
     expect(1 + 1).toBe(2);
     expect('string').toBe('string');
-    expect({name: 'Dunha'}).toBe({name: 'Dunha'});
+    expect({name: 'Dunha'}).toEqual({name: 'Dunha'});
   });
 });

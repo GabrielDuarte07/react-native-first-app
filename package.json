@@ -7,6 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
+    "jest:watch":"npx jest --watchAll",
     "test": "jest"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "@react-native/eslint-config": "0.74.81",
     "@react-native/metro-config": "0.74.81",
     "@react-native/typescript-config": "0.74.81",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/react-native": "^12.5.0",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
